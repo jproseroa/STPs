@@ -19,7 +19,6 @@ expect \"STP-SN-1\"
 #!/bin/bash
 cd /home/ipvision/Monitoring_STPs/STP_SN_1
 fecha="$(date)"
-wd="$(pwd)"
 echo "$fecha : Executing expect_SN_1.sh" > /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt
 echo "Destination cache of STP-SN-1" > /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt
 /home/ipvision/Monitoring_STPs/STP_SN_1/expect_SN_1.sh  > /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt
@@ -56,6 +55,7 @@ Details:
 Current ip_dest_cache= $a
 Current percentage of dest_cache= $b %
 Maximium value= 1048575
+Minimu Percentage= 70%
 ********************************************************
 
 Take place the preventive measures to avoid the buffer overflow.
