@@ -1,5 +1,5 @@
 #!/usr/bin/expect
-set timeout 2
+set timeout 3
 spawn telnet 172.18.56.151
 expect \"Trying 172.18.56.151...\"
 
