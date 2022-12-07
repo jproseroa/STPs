@@ -22,7 +22,6 @@ echo "$fecha : Se ha ejecutado el script STP_ORS_1 para revisar el ip destinatio
 #Set variables
 let a=$(awk -F " " 'NR==15 { print $2 }' /home/ipvision/Monitoring_STPs/STP_ORS_1/dest_cache_ORS_1.txt)
 b=$(bc <<< "scale=2; $a/1048576*100")
-
 if [ $a -gt 734003 ]
 then
 echo "Adax Trap Received
