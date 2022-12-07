@@ -1,0 +1,16 @@
+#!/usr/bin/expect
+set timeout 2
+spawn telnet 172.18.56.151
+expect \"Trying 172.18.56.151...\"
+
+send -- "fs\r"
+expect \"STP-ORS-1\"
+
+send -- "cat /proc/slabinfo |grep ip_dst_cache\r"
+expect \"STP-ORS-1\"
+
+send -- "cat /proc/sys/net/ipv4/route/max_size\r"
+expect \"STP-ORS-1\"
+
+send -- "exit\r"
+expect \"STP-ORS-1\"

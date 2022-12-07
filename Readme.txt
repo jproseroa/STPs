@@ -1,0 +1,3 @@
+The purpose of the following scripts is to be able to obtain the value of the destination cache of each STP's nodes of both Orangestad and San Nicolás.
+This alarm was also configured to indicate when the destination cache exceeds 70% of its value, in this case the alarm will reach the NOC, and the support team will take preventive measures to avoid an outage of the nodes.
+The scripts are configured to run every 2 hours, in the same way this data is saved in a file called outfile_name_of_the_node.txt, with which we would proceed to make graphs in order to predict the growth behavior of this buffer.

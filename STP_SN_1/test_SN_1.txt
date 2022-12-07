@@ -1,0 +1,67 @@
+#!/usr/bin/expect
+set timeout 2
+spawn telnet 172.18.56.156
+expect \"Trying 172.18.56.156...\"
+
+send -- "fs\r"
+expect \"STP-SN-1\"
+
+send -- "cat /proc/slabinfo |grep ip_dst_cache\r"
+expect \"STP-SN-1\"
+
+send -- "cat /proc/sys/net/ipv4/route/max_size\r"
+expect \"STP-SN-1\"
+
+send -- "exit\r"
+expect \"STP-SN-1\"
+
+[root@MONITORING STP_SN_1]# cat test_SN_1.sh
+#!/bin/bash
+cd /home/ipvision/Monitoring_STPs/STP_SN_1
+fecha="$(date)"
+wd="$(pwd)"
+echo "$fecha : Executing expect_SN_1.sh" > /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt
+echo "Destination cache of STP-SN-1" > /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt
+/home/ipvision/Monitoring_STPs/STP_SN_1/expect_SN_1.sh  > /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt
+echo "$fecha : IP_Destination_Cache_SN_1" >> /home/ipvision/Monitoring_STPs/STP_SN_1/outfile_SN_1.txt
+awk -F " " 'NR==15 { print $2 }' /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt  >> /home/ipvision/Monitoring_STPs/STP_SN_1/outfile_SN_1.txt
+
+
+################################################################################                                                                                                                     ##################
+#!/bin/bash
+cd /home/ipvision/Monitoring_STPs/STP_SN_1
+# This script will notify when the ip_destination_cache (buffer)of STPSs surpass                                                                                                                      the limit value (70% of maximium value).
+# CaseID: 0011706 "SETAR - Adax STP - IP buffer monitoring on National STPs"
+#Set variables
+#Location: cd /home/ipvision/Monitoring_STPs/STP_SN_1
+# CaseID: 0011706 "SETAR - Adax STP - IP buffer monitoring on National STPs"
+
+fecha="$(date)"
+echo "$fecha : Se ha ejecutado el script STP_SN_1 para revisar el ip destination cache"
+
+#Set variables
+let a=$(awk -F " " 'NR==15 { print $2 }' /home/ipvision/Monitoring_STPs/STP_SN_1/dest_cache_SN_1.txt)
+b=$(bc <<< "scale=2; $a/1048576*100")
+
+if [ $a -gt 734003 ]
+then
+
+echo "Adax Trap Received
+
+Trap Name: Adax STP Trap - Buffer Monitor
+
+The destination cache value reached increased over 70%
+--------------------------------------------------------
+Details:
+Current ip_dest_cache= $a
+Current percentage of dest_cache= $b %
+Maximium value= 1048575
+********************************************************
+
+Take place the preventive measures to avoid the buffer overflow.
+
+Device: STP-SN-1" | mail -s "SETAR -Trap recieved from STP-SN-1 (172.18.56.156)" -r noreply@ipvision.com.ar   noc@ipvision.com.ar
+
+fi
+
+
