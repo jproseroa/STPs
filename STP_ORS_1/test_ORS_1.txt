@@ -34,7 +34,6 @@ Details:
 
 Current ip_dest_cache= $a
 Current percentage of dest_cache= $b %
-Maximium value= 1048575
 ********************************************************
 
 Take place the preventive measures to avoid the buffer overflow.
